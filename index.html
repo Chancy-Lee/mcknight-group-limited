@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>McKnight Group Limited</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ??? RESET & TOKENS ?????????????????????????????????? */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#ffffff;
+  --off:#fafafa;
+  --dark:#0a1f44;
+  --mid:#1a3a6e;
+  --light-bg:#f5f6f8;
+  --border:#e8eaed;
+  --muted:#6b7280;
+  --text:#0f172a;
+  --gold:#c9a84c;
+  --gold-l:#e6c97a;
+  --gold-bg:rgba(201,168,76,.08);
+  --gold-border:rgba(201,168,76,.25);
+  --r-sm:8px;
+  --r-md:14px;
+  --r-lg:22px;
+  --sh-sm:0 2px 12px rgba(10,31,68,.05);
+  --sh-md:0 8px 32px rgba(10,31,68,.09);
+  --sh-lg:0 20px 60px rgba(10,31,68,.13);
+  --ease:.32s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+p{line-height:1.72}
+ 
+/* ??? PAGES ROUTING ??????????????????????????????????? */
+.page{display:none;animation:fadeIn .4s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+ 
+/* ??? NAVBAR ??????????????????????????????????????????? */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:70px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:var(--ease);
+}
+nav.scrolled{box-shadow:var(--sh-sm)}
+.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.nav-logo-mark{
+  width:36px;height:36px;background:var(--dark);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.nav-logo-mark i{color:var(--gold);font-size:16px}
+.nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
+.nav-logo-words strong{font-size:14px;font-weight:700;color:var(--dark);letter-spacing:-.3px}
+.nav-logo-words span{font-size:9.5px;font-weight:600;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);transition:color var(--ease);cursor:pointer;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--dark)}
+.nav-links a.active::after,.nav-links a:hover::after{transform:scaleX(1)}
+.nav-actions{display:flex;gap:8px}
+.ham{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.ham i{font-size:18px;color:var(--dark)}
+.mobile-menu{
+  display:none;position:fixed;top:70px;left:0;right:0;z-index:999;
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:20px 5%;flex-direction:column;gap:16px;
+  box-shadow:var(--sh-md);
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:14px;font-weight:500;color:var(--text);padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer}
+ 
+/* ??? BUTTONS ??????????????????????????????????????????? */
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 22px;border-radius:100px;
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;border:none;transition:var(--ease);white-space:nowrap;
+}
+.btn-lg{padding:13px 30px;font-size:14px}
+.btn-primary{background:var(--dark);color:var(--white);box-shadow:0 4px 16px rgba(10,31,68,.2)}
+.btn-primary:hover{background:var(--mid);transform:translateY(-1px);box-shadow:0 6px 24px rgba(10,31,68,.28)}
+.btn-ghost{background:transparent;color:var(--dark);border:1.5px solid var(--dark)}
+.btn-ghost:hover{background:var(--dark);color:var(--white)}
+.btn-ghost-white{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.4)}
+.btn-ghost-white:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.7)}
+.btn-gold{background:var(--gold);color:var(--white);box-shadow:0 4px 16px rgba(201,168,76,.28)}
+.btn-gold:hover{background:#b8942f;transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,168,76,.38)}
+.btn-outline-gold{background:transparent;color:var(--gold);border:1.5px solid var(--gold)}
+.btn-outline-gold:hover{background:var(--gold);color:var(--white)}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+ 
+/* ??? SECTION COMMONS ?????????????????????????????????? */
+.section{padding:92px 5%}
+.section-gray{background:var(--light-bg)}
+.section-dark{background:var(--dark)}
+.w{max-width:1180px;margin:0 auto}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10.5px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:12px;
+}
+.eyebrow::before{content:'';width:18px;height:2px;background:var(--gold);border-radius:2px;display:inline-block}
+.eyebrow.center::before{display:none}
+.eyebrow.gold-light{color:var(--gold-l)}
+.eyebrow.gold-light::before{background:var(--gold-l)}
+.h1{font-size:clamp(34px,4.5vw,58px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;color:var(--dark)}
+.h2{font-size:clamp(26px,3vw,42px);font-weight:800;letter-spacing:-1px;line-height:1.15;color:var(--dark)}
+.h3{font-size:clamp(18px,2vw,24px);font-weight:700;letter-spacing:-.4px;color:var(--dark)}
+.h1.white,.h2.white,.h3.white{color:var(--white)}
+.lead{font-size:15.5px;color:var(--muted);line-height:1.72;max-width:600px}
+.lead.white{color:rgba(255,255,255,.6)}
+.section-header{margin-bottom:56px}
+.section-header.center{text-align:center}
+.section-header.center .lead{margin:0 auto}
+ 
+/* ??? REVEAL ??????????????????????????????????????????? */
+.r{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.r.d1{transition-delay:.1s}.r.d2{transition-delay:.2s}.r.d3{transition-delay:.3s}.r.d4{transition-delay:.4s}
+.r.vis{opacity:1;transform:none}
+ 
+/* ??? DIVIDERS ????????????????????????????????????????? */
+.divider{height:1px;background:var(--border);border:none}
+.divider-dark{background:rgba(255,255,255,.08)}
+ 
+/* ???????????????????????????????????????????????????????
+   PAGE 1 � HOME
+??????????????????????????????????????????????????????? */
+ 
+/* Hero */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:100px 5% 80px;position:relative;overflow:hidden;
+  background:var(--white);
+}
+.hero-glow{
+  position:absolute;top:-120px;right:-80px;width:700px;height:700px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 68%);
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(10,31,68,.04) 0%,transparent 68%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1180px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold-bg);border:1px solid var(--gold-border);
+  color:var(--gold);border-radius:100px;
+  padding:5px 14px;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero-pill i{font-size:7px}
+.hero h1{font-size:clamp(36px,4.8vw,60px);font-weight:800;letter-spacing:-1.8px;line-height:1.08;color:var(--dark);margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:16px;color:var(--muted);line-height:1.72;max-width:460px;margin-bottom:40px}
+.hero-stats{display:flex;gap:36px;padding-top:36px;border-top:1px solid var(--border);margin-top:44px}
+.stat-n{font-size:28px;font-weight:800;color:var(--dark);letter-spacing:-1px;line-height:1}
+.stat-l{font-size:11.5px;font-weight:500;color:var(--muted);margin-top:2px}
+ 
+/* Hero card */
+.hero-card-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-card{
+  background:var(--dark);border-radius:var(--r-lg);padding:36px;
+  width:100%;max-width:400px;box-shadow:var(--sh-lg);position:relative;overflow:hidden;
+}
+.hero-card-orb{position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(201,168,76,.1);pointer-events:none}
+.hero-card-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);
+  color:var(--gold-l);border-radius:100px;
+  padding:4px 12px;font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:18px;
+}
+.hero-card h3{font-size:19px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:8px}
+.hero-card p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65;margin-bottom:22px}
+.hero-card-list{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.hero-card-list li{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:rgba(255,255,255,.8)}
+.hero-card-list li i{color:var(--gold);font-size:10px;width:14px;flex-shrink:0}
+.chip{
+  position:absolute;background:var(--white);border-radius:10px;padding:9px 13px;
+  box-shadow:var(--sh-md);display:flex;align-items:center;gap:7px;
+  font-size:12px;font-weight:600;color:var(--dark);white-space:nowrap;
+}
+.chip i{color:var(--gold);font-size:12px}
+.chip-tl{top:-14px;left:-24px;animation:float 4s ease-in-out infinite}
+.chip-br{bottom:28px;right:-24px;animation:float 4s ease-in-out infinite .9s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+ 
+/* About snapshot */
+.about-snap{background:var(--light-bg)}
+.about-snap-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.about-snap-visual{
+  background:var(--dark);border-radius:var(--r-lg);padding:44px;
+  position:relative;overflow:hidden;min-height:400px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.about-snap-visual::before{
+  content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;
+  border-radius:50%;background:rgba(201,168,76,.09);pointer-events:none;
+}
+.about-snap-nums{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.snap-num-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-md);padding:20px;
+}
+.snap-num-card .n{font-size:34px;font-weight:800;color:var(--gold);letter-spacing:-2px;line-height:1}
+.snap-num-card .l{font-size:12px;color:rgba(255,255,255,.45);margin-top:4px}
+.about-snap-text{display:flex;flex-direction:column;gap:24px}
+.value-row{display:flex;gap:14px;align-items:flex-start}
+.value-icon{
+  width:40px;height:40px;border-radius:10px;background:var(--gold-bg);
+  border:1px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.value-icon i{color:var(--gold);font-size:15px}
+.value-content h4{font-size:14.5px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.value-content p{font-size:13px;color:var(--muted);line-height:1.6}
+ 
+/* Services overview */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:28px;
+  transition:var(--ease);cursor:pointer;position:relative;overflow:hidden;
+}
+.svc-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:2.5px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:var(--ease);
+}
+.svc-card:hover{border-color:transparent;box-shadow:var(--sh-md);transform:translateY(-3px)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-icon{
+  width:46px;height:46px;border-radius:10px;background:var(--light-bg);
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  transition:var(--ease);
+}
+.svc-card:hover .svc-icon{background:var(--dark)}
+.svc-icon i{font-size:18px;color:var(--dark);transition:var(--ease)}
+.svc-card:hover .svc-icon i{color:var(--gold)}
+.svc-card h4{font-size:14.5px;font-weight:700;color:var(--dark);margin-bottom:6px;letter-spacing:-.2px}
+.svc-card p{font-size:12.5px;color:var(--muted);line-height:1.65}
+.svc-arrow{
+  display:inline-flex;align-items:center;gap:5px;margin-top:14px;
+  font-size:12px;font-weight:600;color:var(--gold);
+  opacity:0;transform:translateX(-5px);transition:var(--ease);
+}
+.svc-card:hover .svc-arrow{opacity:1;transform:none}
+ 
+/* Diaspora section */
+.diaspora{background:var(--dark);position:relative;overflow:hidden}
+.diaspora-orb{
+  position:absolute;top:-100px;right:-100px;width:500px;height:500px;
+  border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.diaspora-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.diaspora-points{display:flex;flex-direction:column;gap:0}
+.d-point{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:20px 0;border-bottom:1px solid rgba(255,255,255,.07);
+}
+.d-point:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.d-dot{
+  width:38px;height:38px;border-radius:10px;background:rgba(201,168,76,.12);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--ease);
+}
+.d-point:hover .d-dot{background:var(--gold)}
+.d-dot i{color:var(--gold);font-size:14px;transition:var(--ease)}
+.d-point:hover .d-dot i{color:var(--white)}
+.d-text h5{font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px}
+.d-text p{font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.6}
+.diaspora-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-lg);padding:40px;
+}
+.dcard-big{font-size:52px;font-weight:800;color:var(--gold);letter-spacing:-3px;line-height:1;margin-bottom:4px}
+.dcard-big span{font-size:22px;color:rgba(201,168,76,.4);letter-spacing:-1px}
+.dcard-label{font-size:12.5px;color:rgba(255,255,255,.4);margin-bottom:28px}
+.dcard-divider{height:1px;background:rgba(255,255,255,.08);margin-bottom:24px}
+.dcard-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.dcard-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,.7)}
+.dcard-item i{color:var(--gold);font-size:11px;flex-shrink:0}
+ 
+/* Why us */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.why-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:28px;transition:var(--ease);
+}
+.why-card:hover{border-color:transparent;box-shadow:var(--sh-md);transform:translateY(-3px)}
+.why-num{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:1px;margin-bottom:14px}
+.why-card h4{font-size:14.5px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.why-card p{font-size:12.5px;color:var(--muted);line-height:1.65}
+ 
+/* Impact band */
+.impact{background:var(--light-bg)}
+.impact-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.impact-text p{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:20px}
+.impact-visual{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.impact-tile{
+  background:var(--dark);border-radius:var(--r-md);padding:24px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.impact-tile i{font-size:20px;color:var(--gold)}
+.impact-tile h5{font-size:14px;font-weight:700;color:var(--white)}
+.impact-tile p{font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5}
+ 
+/* Partners strip */
+.partners-strip .partners-logos{
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
+}
+.partner-pill{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:100px;padding:10px 20px;
+  font-size:13px;font-weight:600;color:var(--dark);
+  transition:var(--ease);cursor:default;
+}
+.partner-pill:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+ 
+/* CTA banner */
+.cta-banner{background:var(--dark);text-align:center;position:relative;overflow:hidden}
+.cta-banner-orb{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+ 
+/* ???????????????????????????????????????????????????????
+   PAGE 2 � ABOUT
+??????????????????????????????????????????????????????? */
+.page-hero{
+  padding:130px 5% 80px;background:var(--dark);position:relative;overflow:hidden;
+}
+.page-hero-orb{
+  position:absolute;right:-100px;top:-100px;width:500px;height:500px;
+  border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.page-hero h1{color:var(--white);margin-bottom:16px}
+.page-hero .lead{color:rgba(255,255,255,.55)}
+ 
+/* Foreword */
+.foreword{background:var(--light-bg)}
+.foreword-inner{display:grid;grid-template-columns:1fr 2fr;gap:72px;align-items:start}
+.foreword-left{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;position:sticky;top:90px}
+.avatar{
+  width:110px;height:110px;border-radius:50%;
+  background:var(--dark);display:flex;align-items:center;justify-content:center;
+  border:3px solid var(--gold);
+}
+.avatar i{font-size:48px;color:rgba(255,255,255,.3)}
+.foreword-name{font-size:16px;font-weight:700;color:var(--dark)}
+.foreword-title{font-size:12px;color:var(--muted);letter-spacing:.5px}
+.foreword-content blockquote{
+  font-size:15.5px;color:var(--muted);line-height:1.8;
+  border-left:3px solid var(--gold);padding-left:24px;margin-bottom:20px;
+}
+.foreword-content p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px}
+.foreword-sig{font-size:14px;font-weight:600;color:var(--dark);font-style:italic;margin-top:8px}
+ 
+/* Who we are */
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.who-text p{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:16px}
+.who-sectors{display:flex;flex-direction:column;gap:0}
+.sector-row{
+  display:flex;align-items:center;gap:12px;padding:14px 0;
+  border-bottom:1px solid var(--border);font-size:13.5px;font-weight:600;color:var(--dark);
+}
+.sector-row:first-child{border-top:1px solid var(--border)}
+.sector-row i{color:var(--gold);font-size:13px;width:18px;flex-shrink:0}
+ 
+/* Mission Vision */
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.mv-card{
+  border-radius:var(--r-lg);padding:40px;
+}
+.mv-card-mission{background:var(--dark)}
+.mv-card-vision{background:var(--gold)}
+.mv-card h3{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.mv-card-mission h3{color:var(--gold)}
+.mv-card-vision h3{color:rgba(255,255,255,.7)}
+.mv-card p{font-size:14.5px;line-height:1.75}
+.mv-card-mission p{color:rgba(255,255,255,.65)}
+.mv-card-vision p{color:rgba(255,255,255,.9)}
+ 
+/* Values */
+.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.val-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:32px;transition:var(--ease);
+}
+.val-card:hover{border-color:var(--gold);box-shadow:var(--sh-sm)}
+.val-icon{
+  width:48px;height:48px;border-radius:12px;background:var(--gold-bg);
+  border:1px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+.val-icon i{color:var(--gold);font-size:18px}
+.val-card h4{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.val-card p{font-size:13px;color:var(--muted);line-height:1.65}
+ 
+/* Team */
+.team-band{background:var(--light-bg)}
+.team-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.team-visual{
+  background:var(--dark);border-radius:var(--r-lg);padding:40px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.team-row{
+  display:flex;align-items:center;gap:14px;padding:14px;
+  background:rgba(255,255,255,.05);border-radius:var(--r-sm);
+}
+.t-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--gold-bg);border:1px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.t-avatar i{color:var(--gold);font-size:16px}
+.t-info h5{font-size:13px;font-weight:600;color:var(--white)}
+.t-info span{font-size:11px;color:rgba(255,255,255,.4)}
+ 
+/* ???????????????????????????????????????????????????????
+   PAGE 3 � SERVICES
+??????????????????????????????????????????????????????? */
+.svc-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc-full-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;transition:var(--ease);
+}
+.svc-full-card:hover{border-color:transparent;box-shadow:var(--sh-md);transform:translateY(-4px)}
+.svc-full-top{
+  padding:28px;background:var(--light-bg);
+  display:flex;flex-direction:column;gap:10px;
+  border-bottom:1px solid var(--border);
+  transition:var(--ease);
+}
+.svc-full-card:hover .svc-full-top{background:var(--dark)}
+.sfc-icon{
+  width:48px;height:48px;border-radius:12px;background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--ease);
+}
+.svc-full-card:hover .sfc-icon{background:rgba(201,168,76,.15)}
+.sfc-icon i{font-size:19px;color:var(--dark);transition:var(--ease)}
+.svc-full-card:hover .sfc-icon i{color:var(--gold)}
+.svc-full-top h4{font-size:15px;font-weight:700;color:var(--dark);transition:var(--ease)}
+.svc-full-card:hover .svc-full-top h4{color:var(--white)}
+.svc-full-top .tagline{font-size:11.5px;font-weight:500;color:var(--muted);transition:var(--ease)}
+.svc-full-card:hover .tagline{color:rgba(255,255,255,.45)}
+.svc-full-body{padding:24px}
+.svc-full-body p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px}
+.svc-bullets{display:flex;flex-direction:column;gap:8px}
+.svc-bullet{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:500;color:var(--text)}
+.svc-bullet i{color:var(--gold);font-size:10px;flex-shrink:0}
+ 
+/* Process */
+.process-row{display:flex;gap:0;position:relative}
+.process-row::before{
+  content:'';position:absolute;top:28px;left:0;right:0;height:1px;
+  background:var(--border);z-index:0;
+}
+.proc-step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1;padding:0 16px}
+.proc-num{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--white);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:800;color:var(--dark);
+  margin-bottom:16px;transition:var(--ease);
+}
+.proc-step:hover .proc-num{background:var(--gold);border-color:var(--gold);color:var(--white)}
+.proc-step h5{font-size:13.5px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.proc-step p{font-size:12px;color:var(--muted);line-height:1.6}
+ 
+/* McKnight Advantage */
+.advantage-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.adv-item{
+  display:flex;align-items:center;gap:12px;padding:16px 18px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:rgba(255,255,255,.8);
+}
+.adv-item i{color:var(--gold);font-size:13px;flex-shrink:0}
+ 
+/* ???????????????????????????????????????????????????????
+   PAGE 4 � REAL ESTATE
+??????????????????????????????????????????????????????? */
+.invest-why{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.invest-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:28px;transition:var(--ease);
+}
+.invest-card:hover{border-color:var(--gold);box-shadow:var(--sh-sm)}
+.invest-card h4{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.invest-card p{font-size:13px;color:var(--muted);line-height:1.65}
+ 
+.invest-types{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.invest-type-card{
+  border-radius:var(--r-md);padding:32px;
+  border:1px solid var(--border);background:var(--white);
+  transition:var(--ease);cursor:default;
+}
+.invest-type-card:hover{border-color:transparent;box-shadow:var(--sh-md);transform:translateY(-3px)}
+.invest-type-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:var(--light-bg);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+.invest-type-icon i{font-size:22px;color:var(--dark)}
+.invest-type-card h4{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.invest-type-card p{font-size:13px;color:var(--muted);line-height:1.65}
+ 
+/* How it works timeline */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{
+  display:flex;gap:24px;padding:28px 0;
+  border-bottom:1px solid var(--border);
+}
+.tl-item:first-child{border-top:1px solid var(--border)}
+.tl-num{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--gold);color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;flex-shrink:0;
+}
+.tl-content h4{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.tl-content p{font-size:13.5px;color:var(--muted);line-height:1.65}
+ 
+/* Remote features */
+.remote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.remote-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-md);padding:24px;transition:var(--ease);
+}
+.remote-card:hover{background:rgba(255,255,255,.08);border-color:rgba(201,168,76,.3)}
+.remote-card i{font-size:22px;color:var(--gold);margin-bottom:14px}
+.remote-card h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px}
+.remote-card p{font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.65}
+ 
+/* ???????????????????????????????????????????????????????
+   PAGE 5 � PARTNERS & PROJECTS
+??????????????????????????????????????????????????????? */
+.partner-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.partner-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:28px;display:flex;gap:18px;
+  transition:var(--ease);
+}
+.partner-card:hover{border-color:var(--gold);box-shadow:var(--sh-sm)}
+.partner-logo{
+  width:52px;height:52px;border-radius:12px;background:var(--light-bg);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.partner-logo i{font-size:20px;color:var(--dark)}
+.partner-info h4{font-size:14.5px;font-weight:700;color:var(--dark);margin-bottom:5px}
+.partner-info p{font-size:12.5px;color:var(--muted);line-height:1.6}
+ 
+.proj-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.proj-cat{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;transition:var(--ease);
+}
+.proj-cat:hover{border-color:transparent;box-shadow:var(--sh-md);transform:translateY(-3px)}
+.proj-cat-top{
+  padding:28px;display:flex;gap:12px;align-items:flex-start;
+  border-bottom:1px solid var(--border);
+}
+.proj-cat-icon{
+  width:44px;height:44px;border-radius:10px;background:var(--dark);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.proj-cat-icon i{color:var(--gold);font-size:17px}
+.proj-cat-top h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.proj-cat-top span{font-size:11.5px;color:var(--muted)}
+.proj-cat-body{padding:20px 24px;font-size:12.5px;color:var(--muted);line-height:1.65}
+ 
+.approach-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.approach-step{text-align:center;padding:28px 20px}
+.approach-step-num{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--gold-bg);border:1.5px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:800;color:var(--gold);
+  margin:0 auto 16px;
+}
+.approach-step h5{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.approach-step p{font-size:12.5px;color:var(--muted);line-height:1.6}
+ 
+.trust-points{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.trust-point{
+  display:flex;align-items:center;gap:12px;padding:16px;
+  background:rgba(255,255,255,.05);border-radius:var(--r-sm);
+  font-size:13.5px;font-weight:500;color:rgba(255,255,255,.75);
+}
+.trust-point i{color:var(--gold);font-size:13px;flex-shrink:0}
+ 
+/* ???????????????????????????????????????????????????????
+   PAGE 6 � CONTACT
+??????????????????????????????????????????????????????? */
+.contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:60px}
+.contact-info{display:flex;flex-direction:column;gap:32px}
+.contact-office{background:var(--light-bg);border-radius:var(--r-md);padding:28px}
+.contact-office h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.contact-office h4 i{color:var(--gold);font-size:13px}
+.contact-detail{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.contact-detail i{color:var(--gold);font-size:12px;margin-top:4px;flex-shrink:0}
+.contact-detail span{font-size:13.5px;color:var(--text);line-height:1.5}
+ 
+.quick-actions{display:flex;flex-direction:column;gap:10px}
+.quick-action{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);
+  font-size:13.5px;font-weight:600;color:var(--dark);
+  cursor:pointer;transition:var(--ease);text-decoration:none;
+}
+.quick-action:hover{border-color:var(--gold);background:var(--gold-bg);color:var(--gold)}
+.quick-action i{font-size:16px;color:var(--gold);width:20px;text-align:center}
+ 
+.contact-form{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:40px;box-shadow:var(--sh-sm);
+}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.form-group label{font-size:12.5px;font-weight:600;color:var(--dark)}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-family:'Poppins',sans-serif;font-size:13.5px;color:var(--text);
+  background:var(--white);outline:none;transition:var(--ease);
+  appearance:none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-bg)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-success{
+  display:none;padding:16px;background:rgba(201,168,76,.1);border:1px solid var(--gold-border);
+  border-radius:var(--r-sm);font-size:13.5px;font-weight:600;color:var(--dark);
+  align-items:center;gap:10px;margin-top:12px;
+}
+.form-success i{color:var(--gold)}
+ 
+.biz-details{background:var(--light-bg)}
+.biz-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.biz-item{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:22px}
+.biz-item label{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+.biz-item strong{font-size:13.5px;font-weight:700;color:var(--dark)}
+ 
+/* ??? FOOTER ??????????????????????????????????????????? */
+footer{background:var(--dark);padding:64px 5% 32px}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:56px;padding-bottom:44px;
+  border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:28px;
+}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.7;margin:16px 0 20px;max-width:260px}
+.footer-socials{display:flex;gap:8px}
+.f-social{
+  width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;transition:var(--ease);cursor:pointer;
+}
+.f-social:hover{background:var(--gold)}
+.f-social i{color:rgba(255,255,255,.6);font-size:13px;transition:var(--ease)}
+.f-social:hover i{color:var(--white)}
+.footer-col h6{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:16px}
+.footer-col ul{display:flex;flex-direction:column;gap:9px}
+.footer-col a{font-size:13px;color:rgba(255,255,255,.4);cursor:pointer;transition:var(--ease)}
+.footer-col a:hover{color:var(--gold)}
+.footer-contact-line{display:flex;gap:9px;align-items:flex-start;margin-bottom:9px}
+.footer-contact-line i{color:var(--gold);font-size:11px;margin-top:4px;flex-shrink:0}
+.footer-contact-line span{font-size:12.5px;color:rgba(255,255,255,.4);line-height:1.5}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.3)}
+.footer-bottom a{color:var(--gold)}
+.footer-tagline{font-size:11.5px;color:rgba(201,168,76,.5);font-style:italic;margin-top:6px}
+ 
+/* ??? WHATSAPP FAB ????????????????????????????????????? */
+.wa-fab{
+  position:fixed;bottom:28px;right:28px;z-index:999;
+  width:52px;height:52px;border-radius:50%;
+  background:#25d366;box-shadow:0 4px 20px rgba(37,211,102,.4);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:var(--ease);
+}
+.wa-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.5)}
+.wa-fab i{color:var(--white);font-size:22px}
+ 
+/* ??? RESPONSIVE ??????????????????????????????????????? */
+@media(max-width:1100px){
+  .hero-inner,.diaspora-inner,.impact-inner,.about-snap-inner,
+  .team-inner,.who-grid,.contact-layout{grid-template-columns:1fr;gap:48px}
+  .hero-card-wrap{display:none}
+  .diaspora-card,.about-snap-visual{max-width:540px}
+  .services-grid,.svc-full-grid,.proj-cats{grid-template-columns:1fr 1fr}
+  .process-row{flex-direction:column;gap:0}
+  .process-row::before{display:none}
+  .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .biz-inner{grid-template-columns:1fr 1fr}
+  .foreword-inner{grid-template-columns:1fr}
+  .foreword-left{flex-direction:row;text-align:left;position:static}
+}
+@media(max-width:768px){
+  .section{padding:64px 5%}
+  .nav-links,.nav-actions{display:none}
+  .ham{display:flex}
+  .services-grid,.svc-full-grid,.why-grid,.values-grid,.invest-why,
+  .invest-types,.partner-grid,.proj-cats,.trust-points,.advantage-list,
+  .mv-grid,.remote-grid,.approach-steps{grid-template-columns:1fr}
+  .impact-visual{grid-template-columns:1fr 1fr}
+  .biz-inner{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;gap:32px}
+  .footer-bottom{flex-direction:column;gap:6px;text-align:center}
+  .form-row{grid-template-columns:1fr}
+  .about-snap-nums{grid-template-columns:1fr 1fr}
+  .btn-group{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+ 
+<!-- ??? NAV ??????????????????????????????????????????? -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="goTo('home')">
+    <div class="nav-logo-mark"><i class="fa-solid fa-building-columns"></i></div>
+    <div class="nav-logo-words"><strong>McKnight Group</strong><span>Limited</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="goTo('home')" id="nl-home" class="active">Home</a></li>
+    <li><a onclick="goTo('about')" id="nl-about">About</a></li>
+    <li><a onclick="goTo('services')" id="nl-services">Services</a></li>
+    <li><a onclick="goTo('realestate')" id="nl-realestate">Real Estate</a></li>
+    <li><a onclick="goTo('partners')" id="nl-partners">Partners</a></li>
+    <li><a onclick="goTo('contact')" id="nl-contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="goTo('contact')">
+      <i class="fa-solid fa-vault"></i> Vault Login
+    </button>
+    <button class="btn btn-primary" style="font-size:12px;padding:8px 16px;" onclick="goTo('contact')">
+      <i class="fa-solid fa-calendar-check"></i> Consultation
+    </button>
+  </div>
+  <button class="ham" onclick="toggleMenu()"><i class="fa-solid fa-bars" id="ham-icon"></i></button>
+</nav>
+ 
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="goTo('home');closeMenu()">Home</a>
+  <a onclick="goTo('about');closeMenu()">About</a>
+  <a onclick="goTo('services');closeMenu()">Services</a>
+  <a onclick="goTo('realestate');closeMenu()">Real Estate</a>
+  <a onclick="goTo('partners');closeMenu()">Partners &amp; Projects</a>
+  <a onclick="goTo('contact');closeMenu()">Contact</a>
+  <div style="display:flex;gap:8px;padding-top:8px;">
+    <button class="btn btn-primary" onclick="goTo('contact');closeMenu()"><i class="fa-solid fa-calendar-check"></i> Consultation</button>
+    <button class="btn btn-ghost" onclick="closeMenu()"><i class="fa-solid fa-vault"></i> Vault</button>
+  </div>
+</div>
+ 
+ 
+<!-- ????????????????????????????????????????????????????
+     PAGE: HOME
+???????????????????????????????????????????????????? -->
+<div class="page active" id="page-home">
+ 
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-inner w" style="max-width:1180px;margin:0 auto;width:100%;">
+      <div>
+        <div class="hero-pill"><i class="fa-solid fa-circle fa-beat"></i> Registered in Malawi &mdash; COY-4KU5DM7</div>
+        <h1>Building <em>Excellence.</em><br>Delivering Trusted<br>Solutions Across Malawi</h1>
+        <p class="hero-sub">A diversified, multi-sector company providing high-impact services in Real Estate, Construction, Security, Cleaning, Procurement, and more &mdash; driven by quality, integrity, and innovation.</p>
+        <div class="btn-group">
+          <button class="btn btn-primary btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-calendar-check"></i> Request a Consultation</button>
+          <button class="btn btn-ghost btn-lg"><i class="fa-solid fa-vault"></i> Vault Login</button>
+        </div>
+        <div class="hero-stats">
+          <div><div class="stat-n">6+</div><div class="stat-l">Core Industries</div></div>
+          <div><div class="stat-n">100%</div><div class="stat-l">Compliance</div></div>
+          <div><div class="stat-n">MRA</div><div class="stat-l">PPDA Registered</div></div>
+        </div>
+      </div>
+      <div class="hero-card-wrap">
+        <div class="chip chip-tl"><i class="fa-solid fa-shield-halved"></i> Verified &amp; Trusted</div>
+        <div class="hero-card">
+          <div class="hero-card-orb"></div>
+          <div class="hero-card-tag"><i class="fa-solid fa-star"></i> Featured Investment</div>
+          <h3 class="hero-card-title">Prime Plots for Sale &mdash; 6 Miles</h3>
+          <p class="hero-card-desc">Near Guzani, Along Bunda Road. Residential &amp; investment use.</p>
+          <ul class="hero-card-list">
+            <li><i class="fa-solid fa-bolt"></i> Electricity Available</li>
+            <li><i class="fa-solid fa-droplet"></i> Water Available</li>
+            <li><i class="fa-solid fa-graduation-cap"></i> Near Goodsoil Academy</li>
+            <li><i class="fa-solid fa-road"></i> Along Bunda Road</li>
+          </ul>
+          <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="goTo('realestate')">
+            <i class="fa-solid fa-map-location-dot"></i> Book a Site Visit
+          </button>
+        </div>
+        <div class="chip chip-br"><i class="fa-solid fa-award"></i> Quality Assured</div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- About Snapshot -->
+  <section class="section about-snap">
+    <div class="w">
+      <div class="about-snap-inner">
+        <div class="about-snap-visual r">
+          <div>
+            <div class="eyebrow gold-light">Our Reach</div>
+            <h3 style="color:var(--white);margin-top:8px;">Multi-Sector.<br>One Trusted Group.</h3>
+          </div>
+          <div class="about-snap-nums">
+            <div class="snap-num-card"><div class="n">6+</div><div class="l">Industries Served</div></div>
+            <div class="snap-num-card"><div class="n">7+</div><div class="l">Major Partners</div></div>
+            <div class="snap-num-card"><div class="n">2</div><div class="l">Office Locations</div></div>
+            <div class="snap-num-card"><div class="n">V2063</div><div class="l">Aligned Mission</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="section-header r">
+            <div class="eyebrow">Who We Are</div>
+            <h2 class="h2" style="margin-bottom:14px;">Welcome to McKnight Group Limited</h2>
+            <p class="lead">McKnight Group Limited is a dynamic and diversified Malawian company delivering essential, value-driven services across multiple sectors. Built on a foundation of integrity, professionalism, and innovation, we serve institutions, businesses, and individuals with a clear mission &mdash; to deliver excellence without compromise.</p>
+          </div>
+          <div class="about-snap-text">
+            <div class="value-row r d1">
+              <div class="value-icon"><i class="fa-solid fa-gem"></i></div>
+              <div class="value-content"><h4>Integrity</h4><p>We operate with honesty and accountability in every engagement.</p></div>
+            </div>
+            <div class="value-row r d2">
+              <div class="value-icon"><i class="fa-solid fa-medal"></i></div>
+              <div class="value-content"><h4>Excellence</h4><p>Every project is executed to the highest standards of quality and professionalism.</p></div>
+            </div>
+            <div class="value-row r d3">
+              <div class="value-icon"><i class="fa-solid fa-lightbulb"></i></div>
+              <div class="value-content"><h4>Innovation</h4><p>We embrace modern approaches to deliver smarter, better solutions.</p></div>
+            </div>
+          </div>
+          <div style="margin-top:32px;" class="r d4">
+            <button class="btn btn-ghost" onclick="goTo('about')"><i class="fa-solid fa-arrow-right"></i> Learn More About Us</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Services Overview -->
+  <section class="section">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Our Expertise</div>
+        <h2 class="h2" style="margin-bottom:12px;">Delivering Integrated Solutions<br>Across Key Industries</h2>
+        <p class="lead">Delivering integrated solutions across key industries with precision, reliability, and excellence.</p>
+      </div>
+      <div class="services-grid">
+        <div class="svc-card r d1">
+          <div class="svc-icon"><i class="fa-solid fa-building"></i></div>
+          <h4>Real Estate &amp; Property Management</h4>
+          <p>Modern housing, commercial properties, and investment solutions designed for long-term value.</p>
+          <a class="svc-arrow" onclick="goTo('realestate')">Explore <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="svc-card r d2">
+          <div class="svc-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+          <h4>Civil Works &amp; Construction</h4>
+          <p>Roads, buildings, and infrastructure projects delivered with precision and durability.</p>
+          <a class="svc-arrow" onclick="goTo('services')">Explore <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="svc-card r d3">
+          <div class="svc-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+          <h4>General Supplies &amp; Procurement</h4>
+          <p>Reliable sourcing and supply of essential goods for public and private sectors.</p>
+          <a class="svc-arrow" onclick="goTo('services')">Explore <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="svc-card r d1">
+          <div class="svc-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h4>Security Management</h4>
+          <p>Professional guarding services, surveillance systems, and risk management.</p>
+          <a class="svc-arrow" onclick="goTo('services')">Explore <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="svc-card r d2">
+          <div class="svc-icon"><i class="fa-solid fa-broom"></i></div>
+          <h4>Cleaning &amp; Sanitation</h4>
+          <p>Industrial and commercial cleaning using modern, eco-friendly methods.</p>
+          <a class="svc-arrow" onclick="goTo('services')">Explore <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="svc-card r d3" style="background:var(--dark);border-color:var(--dark);">
+          <div class="svc-icon" style="background:rgba(201,168,76,.12);"><i class="fa-solid fa-bug" style="color:var(--gold);"></i></div>
+          <h4 style="color:var(--white);">Pest Control &amp; Fumigation</h4>
+          <p style="color:rgba(255,255,255,.45);">Safe and effective pest management for all environments.</p>
+          <button class="btn btn-gold" style="margin-top:18px;font-size:12.5px;" onclick="goTo('services')">
+            <i class="fa-solid fa-grid-2"></i> All Services
+          </button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px;" class="r">
+        <button class="btn btn-ghost btn-lg" onclick="goTo('services')"><i class="fa-solid fa-grid-2"></i> Explore All Services</button>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Diaspora / Real Estate Investment -->
+  <section class="section diaspora">
+    <div class="diaspora-orb"></div>
+    <div class="w diaspora-inner">
+      <div>
+        <div class="eyebrow gold-light" style="margin-bottom:12px;">Diaspora Investment</div>
+        <h2 class="h2 white" style="margin-bottom:16px;">Invest Back Home &mdash;<br>From Anywhere in<br>the World</h2>
+        <p class="lead white" style="margin-bottom:40px;">We specialize in helping diaspora clients invest confidently in real estate through a transparent, professionally managed, and fully supported process.</p>
+        <div class="diaspora-points">
+          <div class="d-point"><div class="d-dot"><i class="fa-solid fa-file-shield"></i></div><div class="d-text"><h5>Verified Land Titles &amp; Legal Security</h5><p>Full documentation and transparent title verification before any transaction.</p></div></div>
+          <div class="d-point"><div class="d-dot"><i class="fa-solid fa-gears"></i></div><div class="d-text"><h5>End-to-End Project Management</h5><p>We handle everything so you can invest without being physically present.</p></div></div>
+          <div class="d-point"><div class="d-dot"><i class="fa-solid fa-credit-card"></i></div><div class="d-text"><h5>Flexible Payment Options</h5><p>Convenient installment structures tailored to your timeline and budget.</p></div></div>
+          <div class="d-point"><div class="d-dot"><i class="fa-solid fa-satellite-dish"></i></div><div class="d-text"><h5>Real-Time Project Updates</h5><p>Photos, reports, and progress updates delivered directly to you.</p></div></div>
+        </div>
+        <div style="margin-top:36px;">
+          <button class="btn btn-gold btn-lg" onclick="goTo('realestate')"><i class="fa-solid fa-arrow-right"></i> Start Your Investment Journey</button>
+        </div>
+      </div>
+      <div class="r">
+        <div class="diaspora-card">
+          <div class="dcard-big">4 <span>Steps</span></div>
+          <div class="dcard-label">to owning property in Malawi from abroad</div>
+          <div class="dcard-divider"></div>
+          <div class="dcard-list">
+            <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Choose Your Investment</div>
+            <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Secure Legal Agreement</div>
+            <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Track Progress Remotely</div>
+            <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Receive Your Property</div>
+          </div>
+          <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:20px;" onclick="goTo('realestate')">
+            <i class="fa-solid fa-map-location-dot"></i> View Investment Options
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Why Choose Us -->
+  <section class="section section-gray">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Why McKnight</div>
+        <h2 class="h2" style="margin-bottom:12px;">Why Work With<br>McKnight Group Limited?</h2>
+        <p class="lead">We deliver integrated solutions across industries with the professional standards, ethical foundations, and client commitment that set us apart.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card r d1"><div class="why-num">01 &mdash; Expertise</div><h4>Multi-Sector Expertise</h4><p>We deliver integrated solutions across multiple industries with professionalism and precision under one trusted brand.</p></div>
+        <div class="why-card r d2"><div class="why-num">02 &mdash; Quality</div><h4>Quality &amp; Excellence</h4><p>Every project is executed with strict quality standards, modern tools, and unwavering attention to detail.</p></div>
+        <div class="why-card r d3"><div class="why-num">03 &mdash; Track Record</div><h4>Trusted by Leading Institutions</h4><p>We have successfully partnered with government bodies and private organizations across Malawi.</p></div>
+        <div class="why-card r d1"><div class="why-num">04 &mdash; Client Focus</div><h4>Client-Centric Approach</h4><p>We tailor our services to meet your unique needs, goals, and budget without compromise.</p></div>
+        <div class="why-card r d2"><div class="why-num">05 &mdash; Compliance</div><h4>Compliance &amp; Integrity</h4><p>We operate with full legal compliance and uphold the highest ethical standards in every engagement.</p></div>
+        <div class="why-card r d3"><div class="why-num">06 &mdash; Impact</div><h4>Impact-Driven</h4><p>Our work contributes to national development, community growth, and Malawi Vision 2063.</p></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Impact -->
+  <section class="section impact">
+    <div class="w impact-inner">
+      <div class="impact-text r">
+        <div class="eyebrow">Our Purpose</div>
+        <h2 class="h2" style="margin-bottom:20px;">Driving Malawi's Future &mdash;<br>Vision 2063</h2>
+        <p>At McKnight Group Limited, our work goes beyond business. We actively contribute to the realization of Malawi Vision 2063 by supporting infrastructure development, promoting environmental health, enhancing security, and driving industrial growth.</p>
+        <p>Through our services, we create jobs, empower communities, and help build a self-reliant, inclusive, and prosperous nation.</p>
+        <div style="margin-top:28px;">
+          <button class="btn btn-primary" onclick="goTo('about')"><i class="fa-solid fa-arrow-right"></i> Our Mission &amp; Vision</button>
+        </div>
+      </div>
+      <div class="impact-visual r">
+        <div class="impact-tile"><i class="fa-solid fa-city"></i><h5>Infrastructure</h5><p>Real estate, construction, and civil works supporting urban development</p></div>
+        <div class="impact-tile"><i class="fa-solid fa-heart-pulse"></i><h5>Public Health</h5><p>Cleaning, sanitation, and pest control for healthier communities</p></div>
+        <div class="impact-tile"><i class="fa-solid fa-shield-halved"></i><h5>Security</h5><p>Professional security solutions protecting institutions and assets</p></div>
+        <div class="impact-tile"><i class="fa-solid fa-seedling"></i><h5>Employment</h5><p>Creating jobs and empowering local businesses across Malawi</p></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Partners Strip -->
+  <section class="section partners-strip">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Our Partners</div>
+        <h2 class="h2" style="margin-bottom:12px;">Trusted by Leading Institutions</h2>
+        <p class="lead">We are proud to have partnered with respected organizations across Malawi.</p>
+      </div>
+      <div class="partners-logos r">
+        <div class="partner-pill"><i class="fa-solid fa-landmark" style="color:var(--gold);margin-right:6px;"></i> Chikwawa District Council</div>
+        <div class="partner-pill"><i class="fa-solid fa-landmark" style="color:var(--gold);margin-right:6px;"></i> Lilongwe District Council</div>
+        <div class="partner-pill"><i class="fa-solid fa-hospital" style="color:var(--gold);margin-right:6px;"></i> Zomba Central Hospital</div>
+        <div class="partner-pill"><i class="fa-solid fa-mountain" style="color:var(--gold);margin-right:6px;"></i> Sovereign Metals Limited</div>
+        <div class="partner-pill"><i class="fa-solid fa-building" style="color:var(--gold);margin-right:6px;"></i> ERIS Property</div>
+        <div class="partner-pill"><i class="fa-solid fa-building" style="color:var(--gold);margin-right:6px;"></i> RiverBend Properties</div>
+        <div class="partner-pill"><i class="fa-solid fa-briefcase" style="color:var(--gold);margin-right:6px;"></i> Magrenda Limited</div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- CTA Banner -->
+  <section class="section cta-banner">
+    <div class="cta-banner-orb"></div>
+    <div class="w" style="position:relative;">
+      <div class="eyebrow center gold-light" style="justify-content:center;margin-bottom:12px;">Get Started</div>
+      <h2 class="h2 white" style="text-align:center;margin-bottom:14px;max-width:600px;margin-left:auto;margin-right:auto;">We Are Ready to Work With You</h2>
+      <p class="lead white" style="text-align:center;margin:0 auto 36px;">Partner with a company that delivers results, builds trust, and exceeds expectations across every project.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <button class="btn btn-gold btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-phone"></i> Contact Us</button>
+        <button class="btn btn-ghost-white btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-calendar-check"></i> Request a Consultation</button>
+      </div>
+    </div>
+  </section>
+ 
+</div><!-- /page-home -->
+ 
+ 
+<!-- ????????????????????????????????????????????????????
+     PAGE: ABOUT
+???????????????????????????????????????????????????? -->
+<div class="page" id="page-about">
+  <section class="page-hero">
+    <div class="page-hero-orb"></div>
+    <div class="w">
+      <div class="eyebrow gold-light">About Us</div>
+      <h1 class="h1 white" style="margin-bottom:16px;margin-top:10px;">About McKnight Group Limited</h1>
+      <p class="lead white">A trusted, diversified Malawian company delivering excellence across multiple sectors.</p>
+    </div>
+  </section>
+ 
+  <!-- CEO Foreword -->
+  <section class="section foreword">
+    <div class="w">
+      <div class="section-header r">
+        <div class="eyebrow">Leadership</div>
+        <h2 class="h2" style="margin-bottom:6px;">A Message from the Managing Director</h2>
+      </div>
+      <div class="foreword-inner">
+        <div class="foreword-left r">
+          <div class="avatar"><i class="fa-solid fa-user-tie"></i></div>
+          <div>
+            <div class="foreword-name">Managing Director</div>
+            <div class="foreword-title">McKnight Group Limited</div>
+          </div>
+        </div>
+        <div class="foreword-content r">
+          <blockquote>"At McKnight Group Limited, we believe that excellence is not just an option &mdash; it is our standard. From our humble beginnings to becoming a dynamic, multi-sectoral brand, we have built our reputation on one unwavering principle: delivering quality without compromise."</blockquote>
+          <p>In today's fast-paced and competitive business environment, clients demand more than just service &mdash; they demand reliability, efficiency, and value. That is exactly what we stand for. Across every sector we operate in, we bring professionalism, technical precision, and a results-driven mindset.</p>
+          <p>Our work is not only guided by market needs, but by a deeper purpose &mdash; to be a catalyst for national development aligned with Malawi Vision 2063. Every service we offer is designed to uplift communities, support industries, and contribute to building a self-reliant and prosperous Malawi.</p>
+          <p>As we continue to grow and innovate, our clients remain at the heart of everything we do. We don't just deliver services &mdash; we deliver solutions that make a difference.</p>
+          <div class="foreword-sig">Where integrity meets excellence, and every project is a promise kept.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Who we are -->
+  <section class="section">
+    <div class="w">
+      <div class="who-grid">
+        <div class="r">
+          <div class="eyebrow">Our Identity</div>
+          <h2 class="h2" style="margin-bottom:20px;">Who We Are</h2>
+          <div class="who-text">
+            <p>McKnight Group Limited is a dynamic and diversified Malawian company at the forefront of delivering essential, value-driven services across multiple sectors.</p>
+            <p>Our strength lies in our integrated approach &mdash; combining innovation, professionalism, and local expertise to meet the complex needs of our clients. Whether it's securing environments, maintaining hygienic spaces, supplying quality goods, managing properties, or delivering construction solutions, we bring excellence, accountability, and integrity to every project.</p>
+          </div>
+          <div style="margin-top:28px;">
+            <button class="btn btn-primary" onclick="goTo('services')"><i class="fa-solid fa-grid-2"></i> Explore Our Services</button>
+          </div>
+        </div>
+        <div class="r d2">
+          <h3 class="h3" style="margin-bottom:20px;">Our Operational Sectors</h3>
+          <div class="who-sectors">
+            <div class="sector-row"><i class="fa-solid fa-building"></i> Real Estate &amp; Property Management</div>
+            <div class="sector-row"><i class="fa-solid fa-helmet-safety"></i> Civil Works &amp; Construction</div>
+            <div class="sector-row"><i class="fa-solid fa-boxes-stacked"></i> General Supplies &amp; Procurement</div>
+            <div class="sector-row"><i class="fa-solid fa-shield-halved"></i> Security Management</div>
+            <div class="sector-row"><i class="fa-solid fa-broom"></i> Professional Cleaning &amp; Sanitation</div>
+            <div class="sector-row"><i class="fa-solid fa-bug"></i> Pest Control &amp; Fumigation</div>
+            <div class="sector-row"><i class="fa-solid fa-mountain"></i> Mining &amp; Resource Development</div>
+            <div class="sector-row"><i class="fa-solid fa-leaf"></i> Landscaping &amp; Environmental Solutions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Mission & Vision -->
+  <section class="section section-gray">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Direction</div>
+        <h2 class="h2" style="margin-bottom:12px;">Mission &amp; Vision</h2>
+      </div>
+      <div class="mv-grid r">
+        <div class="mv-card mv-card-mission">
+          <h3>Our Mission</h3>
+          <p>To deliver exceptional and integrated solutions in General Supplies, Real Estate, Cleaning, Pest Control, Security, and Construction by combining professionalism, innovation, and a client-first approach &mdash; building long-term value for our clients, our people, and the nation.</p>
+        </div>
+        <div class="mv-card mv-card-vision">
+          <h3>Our Vision</h3>
+          <p>To be Malawi's most trusted and diversified service brand, leading the way in delivering high-impact solutions across key sectors while actively contributing to the realization of Malawi Vision 2063.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Core Values -->
+  <section class="section">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Core Values</div>
+        <h2 class="h2" style="margin-bottom:12px;">What We Stand For</h2>
+        <p class="lead">The principles that guide every decision, every service, and every relationship we build.</p>
+      </div>
+      <div class="values-grid">
+        <div class="val-card r d1"><div class="val-icon"><i class="fa-solid fa-gem"></i></div><h4>Integrity</h4><p>We operate with honesty, transparency, and accountability at every level. Our clients trust us because we honor our commitments and uphold ethical standards.</p></div>
+        <div class="val-card r d2"><div class="val-icon"><i class="fa-solid fa-medal"></i></div><h4>Excellence</h4><p>We are driven by an unwavering commitment to quality and professionalism. We don't just meet expectations &mdash; we consistently exceed them.</p></div>
+        <div class="val-card r d3"><div class="val-icon"><i class="fa-solid fa-lightbulb"></i></div><h4>Innovation</h4><p>We embrace change, invest in modern solutions, and continuously improve how we deliver value in a fast-evolving world.</p></div>
+        <div class="val-card r d4"><div class="val-icon"><i class="fa-solid fa-seedling"></i></div><h4>Impact-Driven</h4><p>We measure success not only by results, but by how we uplift communities, empower people, and contribute to national development.</p></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Impact -->
+  <section class="section section-dark">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center gold-light">Purpose</div>
+        <h2 class="h2 white" style="margin-bottom:12px;">Our Impact on Malawi Vision 2063</h2>
+        <p class="lead white" style="margin:0 auto;">McKnight Group Limited actively contributes to national development by delivering services that strengthen key pillars of Malawi's long-term prosperity.</p>
+      </div>
+      <div class="why-grid" style="margin-top:0;">
+        <div class="why-card r d1" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08);">
+          <div style="color:var(--gold);font-size:22px;margin-bottom:14px;"><i class="fa-solid fa-city"></i></div>
+          <h4 style="color:var(--white);">Industrialization &amp; Urban Development</h4>
+          <p style="color:rgba(255,255,255,.45);">Through real estate, construction, and procurement services supporting infrastructure growth.</p>
+        </div>
+        <div class="why-card r d2" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08);">
+          <div style="color:var(--gold);font-size:22px;margin-bottom:14px;"><i class="fa-solid fa-heart-pulse"></i></div>
+          <h4 style="color:var(--white);">Public Health &amp; Productivity</h4>
+          <p style="color:rgba(255,255,255,.45);">Cleaning, sanitation, and pest control services improving health outcomes across Malawi.</p>
+        </div>
+        <div class="why-card r d3" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08);">
+          <div style="color:var(--gold);font-size:22px;margin-bottom:14px;"><i class="fa-solid fa-shield-halved"></i></div>
+          <h4 style="color:var(--white);">Safety &amp; Stability</h4>
+          <p style="color:rgba(255,255,255,.45);">Professional security solutions protecting institutions, communities, and national assets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Team -->
+  <section class="section team-band">
+    <div class="w team-inner">
+      <div class="r">
+        <div class="eyebrow">Our People</div>
+        <h2 class="h2" style="margin-bottom:16px;">Our People, Our Strength</h2>
+        <p style="font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:20px;">At McKnight Group Limited, our greatest asset is our exceptional team. Behind every service we deliver is a group of skilled, passionate, and dedicated professionals who bring technical expertise, innovation, and a commitment to excellence.</p>
+        <p style="font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:32px;">Our team is equipped with modern tools, industry knowledge, and a shared vision to deliver solutions that make a lasting impact.</p>
+        <button class="btn btn-primary" onclick="goTo('contact')"><i class="fa-solid fa-handshake"></i> Join Our Team</button>
+      </div>
+      <div class="team-visual r d2">
+        <h3 style="color:var(--white);font-size:16px;margin-bottom:4px;">Specialist Departments</h3>
+        <p style="color:rgba(255,255,255,.4);font-size:12.5px;margin-bottom:20px;">Professionals across all service lines</p>
+        <div class="team-row"><div class="t-avatar"><i class="fa-solid fa-helmet-safety"></i></div><div class="t-info"><h5>Construction &amp; Engineering</h5><span>Site managers, civil engineers, surveyors</span></div></div>
+        <div class="team-row"><div class="t-avatar"><i class="fa-solid fa-building"></i></div><div class="t-info"><h5>Real Estate Division</h5><span>Property agents, valuers, project managers</span></div></div>
+        <div class="team-row"><div class="t-avatar"><i class="fa-solid fa-shield-halved"></i></div><div class="t-info"><h5>Security &amp; Surveillance</h5><span>Guards, CCTV technicians, risk officers</span></div></div>
+        <div class="team-row"><div class="t-avatar"><i class="fa-solid fa-broom"></i></div><div class="t-info"><h5>Cleaning &amp; Sanitation</h5><span>Trained cleaners, supervisors, health officers</span></div></div>
+        <div class="team-row"><div class="t-avatar"><i class="fa-solid fa-boxes-stacked"></i></div><div class="t-info"><h5>Procurement &amp; Logistics</h5><span>Supply chain, procurement, delivery officers</span></div></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- About CTA -->
+  <section class="section cta-banner" style="background:var(--dark);">
+    <div class="cta-banner-orb"></div>
+    <div class="w" style="position:relative;text-align:center;">
+      <div class="eyebrow center gold-light" style="justify-content:center;margin-bottom:12px;">Work With Us</div>
+      <h2 class="h2 white" style="margin-bottom:14px;">Let's Build Something Meaningful Together</h2>
+      <p class="lead white" style="margin:0 auto 36px;">Whether you are looking for reliable services, strategic partnership, or investment opportunities, McKnight Group Limited is ready to deliver.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <button class="btn btn-gold btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-phone"></i> Contact Us</button>
+        <button class="btn btn-ghost-white btn-lg" onclick="goTo('services')"><i class="fa-solid fa-grid-2"></i> Explore Our Services</button>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-about -->
+ 
+ 
+<!-- ????????????????????????????????????????????????????
+     PAGE: SERVICES
+???????????????????????????????????????????????????? -->
+<div class="page" id="page-services">
+  <section class="page-hero">
+    <div class="page-hero-orb"></div>
+    <div class="w">
+      <div class="eyebrow gold-light">Services</div>
+      <h1 class="h1 white" style="margin-bottom:16px;margin-top:10px;">Integrated Services.<br>Proven Results.</h1>
+      <p class="lead white" style="max-width:560px;">Delivering professional, high-impact solutions across multiple industries with precision, reliability, and excellence.</p>
+    </div>
+  </section>
+ 
+  <!-- Services Full Grid -->
+  <section class="section">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">All Services</div>
+        <h2 class="h2" style="margin-bottom:12px;">Comprehensive Solutions<br>Across Key Sectors</h2>
+        <p class="lead">Our multi-sector expertise allows us to operate seamlessly across industries, offering tailored services that meet the highest standards of performance, safety, and compliance.</p>
+      </div>
+      <div class="svc-full-grid">
+        <div class="svc-full-card r d1">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+            <h4>General Supplies &amp; Procurement</h4>
+            <div class="tagline">Reliable sourcing. Efficient delivery.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We provide strategic procurement and supply chain solutions, delivering a wide range of goods including office equipment, construction materials, medical supplies, and industrial tools.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Transparent procurement processes</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Cost efficiency and value for money</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Timely and reliable delivery</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d2">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-building"></i></div>
+            <h4>Real Estate &amp; Property Management</h4>
+            <div class="tagline">Building value. Managing assets.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We develop and manage residential, commercial, and institutional properties with a focus on quality, sustainability, and long-term investment returns.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Property development and construction</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Leasing and tenant management</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Property valuation and advisory</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d3">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+            <h4>Civil Works &amp; Construction</h4>
+            <div class="tagline">Engineering durable infrastructure.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We deliver construction projects ranging from buildings and roads to water systems and drainage infrastructure.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Compliance with engineering standards</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Strong project management</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Durable and high-quality results</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d1">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h4>Security Management &amp; Surveillance</h4>
+            <div class="tagline">Protecting what matters most.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We provide professional security solutions combining trained personnel with modern surveillance technologies.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Security guards</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> CCTV installation &amp; access control</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Risk assessments</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d2">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-broom"></i></div>
+            <h4>Cleaning &amp; Sanitation Services</h4>
+            <div class="tagline">Clean spaces. Healthy environments.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We offer industrial and commercial cleaning solutions using advanced equipment and eco-friendly products.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Offices and commercial buildings</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Hospitals and schools</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Post-construction cleaning</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d3">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-bug"></i></div>
+            <h4>Pest Control &amp; Fumigation</h4>
+            <div class="tagline">Safe. Effective. Reliable.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>Our pest management solutions use safe and certified methods to eliminate pests while protecting health and the environment.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Residential properties</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Commercial facilities</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Agricultural environments</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d1">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-wrench"></i></div>
+            <h4>Facilities Maintenance &amp; Support</h4>
+            <div class="tagline">Keeping operations running smoothly.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We provide comprehensive maintenance services to ensure the efficiency and longevity of your facilities.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Electrical and plumbing maintenance</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> HVAC servicing</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Building audits &amp; waste management</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d2">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-mountain"></i></div>
+            <h4>Mining &amp; Resource Development</h4>
+            <div class="tagline">Supporting sustainable extraction.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We deliver specialized services to the mining sector, including site preparation, logistics, and environmental rehabilitation.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Safety and compliance</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Operational efficiency</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Environmental responsibility</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-full-card r d3">
+          <div class="svc-full-top">
+            <div class="sfc-icon"><i class="fa-solid fa-leaf"></i></div>
+            <h4>Landscaping &amp; Environmental Solutions</h4>
+            <div class="tagline">Enhancing outdoor environments.</div>
+          </div>
+          <div class="svc-full-body">
+            <p>We design and maintain landscapes that improve aesthetics, functionality, and environmental sustainability.</p>
+            <div class="svc-bullets">
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Garden design &amp; lawn care</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Tree planting</div>
+              <div class="svc-bullet"><i class="fa-solid fa-check"></i> Outdoor maintenance</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Process -->
+  <section class="section section-gray">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">How We Work</div>
+        <h2 class="h2" style="margin-bottom:12px;">Our Delivery Process</h2>
+      </div>
+      <div class="process-row r">
+        <div class="proc-step"><div class="proc-num">01</div><h5>Consultation</h5><p>We understand your needs, goals, and project requirements.</p></div>
+        <div class="proc-step"><div class="proc-num">02</div><h5>Planning &amp; Strategy</h5><p>We design tailored, efficient solutions aligned with your objectives.</p></div>
+        <div class="proc-step"><div class="proc-num">03</div><h5>Execution</h5><p>Our expert team delivers with precision and professionalism.</p></div>
+        <div class="proc-step"><div class="proc-num">04</div><h5>Quality Assurance</h5><p>Every project is reviewed to ensure it meets our high standards.</p></div>
+        <div class="proc-step"><div class="proc-num">05</div><h5>Ongoing Support</h5><p>We provide continued support to ensure long-term success.</p></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- McKnight Advantage -->
+  <section class="section section-dark">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center gold-light">Advantage</div>
+        <h2 class="h2 white" style="margin-bottom:12px;">The McKnight Advantage</h2>
+        <p class="lead white" style="margin:0 auto;">What makes our services stand out from the rest.</p>
+      </div>
+      <div class="advantage-list r">
+        <div class="adv-item"><i class="fa-solid fa-circle-check"></i> Multi-sector expertise under one brand</div>
+        <div class="adv-item"><i class="fa-solid fa-circle-check"></i> Highly skilled and experienced professionals</div>
+        <div class="adv-item"><i class="fa-solid fa-circle-check"></i> Modern tools and industry best practices</div>
+        <div class="adv-item"><i class="fa-solid fa-circle-check"></i> Reliable, timely, and efficient delivery</div>
+        <div class="adv-item"><i class="fa-solid fa-circle-check"></i> Strong focus on quality and safety</div>
+        <div class="adv-item"><i class="fa-solid fa-circle-check"></i> Full legal compliance and ethical operations</div>
+      </div>
+      <p style="text-align:center;font-size:14px;color:rgba(255,255,255,.4);margin-top:48px;font-style:italic;">At McKnight Group Limited, we don't just provide services &mdash; we deliver value, build trust, and create lasting impact across every sector we serve.</p>
+    </div>
+  </section>
+ 
+  <!-- Services CTA -->
+  <section class="section section-gray">
+    <div class="w" style="text-align:center;">
+      <div class="eyebrow center" style="justify-content:center;margin-bottom:12px;">Get Started</div>
+      <h2 class="h2" style="margin-bottom:14px;">Need a Reliable Service Partner?</h2>
+      <p class="lead" style="margin:0 auto 36px;">Let McKnight Group Limited deliver solutions tailored to your needs &mdash; efficiently, professionally, and with guaranteed quality.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <button class="btn btn-primary btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-calendar-check"></i> Request a Consultation</button>
+        <button class="btn btn-ghost btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-phone"></i> Get in Touch</button>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-services -->
+ 
+ 
+<!-- ????????????????????????????????????????????????????
+     PAGE: REAL ESTATE
+???????????????????????????????????????????????????? -->
+<div class="page" id="page-realestate">
+  <section class="page-hero">
+    <div class="page-hero-orb"></div>
+    <div class="w">
+      <div class="eyebrow gold-light">Real Estate &amp; Investment</div>
+      <h1 class="h1 white" style="margin-bottom:16px;margin-top:10px;">Invest in Malawi Real Estate &mdash;<br>From Anywhere in the World</h1>
+      <p class="lead white" style="max-width:560px;margin-bottom:32px;">Secure, transparent, and professionally managed property investments tailored for diaspora clients and forward-thinking investors.</p>
+      <div class="btn-group">
+        <button class="btn btn-gold btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-arrow-right"></i> Start Your Investment Journey</button>
+        <button class="btn btn-ghost-white btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-calendar-check"></i> Request a Consultation</button>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Opening Pitch -->
+  <section class="section">
+    <div class="w">
+      <div class="about-snap-inner" style="gap:72px;">
+        <div class="r">
+          <div class="eyebrow">Why Invest With Us</div>
+          <h2 class="h2" style="margin-bottom:18px;">Own Property Back Home &mdash;<br>Without the Stress</h2>
+          <p style="font-size:15.5px;color:var(--muted);line-height:1.75;margin-bottom:16px;">Imagine owning a secure, high-quality property in Malawi &mdash; without the uncertainty, risks, or need to be physically present.</p>
+          <p style="font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:16px;">At McKnight Group Limited, we make real estate investment simple, transparent, and fully managed. Whether you want to build your dream home, generate rental income, or secure long-term assets, we provide a trusted, end-to-end solution.</p>
+          <p style="font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:32px;">We handle everything &mdash; so you can invest with confidence from anywhere in the world.</p>
+          <button class="btn btn-gold" onclick="goTo('contact')"><i class="fa-solid fa-phone"></i> Speak to an Advisor</button>
+        </div>
+        <div class="invest-why r d2">
+          <div class="invest-card"><div class="val-icon" style="margin-bottom:14px;"><i class="fa-solid fa-file-shield"></i></div><h4>Trust &amp; Transparency</h4><p>Verified land titles, clear legal documentation, and full project visibility.</p></div>
+          <div class="invest-card"><div class="val-icon" style="margin-bottom:14px;"><i class="fa-solid fa-gears"></i></div><h4>End-to-End Management</h4><p>From land acquisition to construction and property management &mdash; we handle everything.</p></div>
+          <div class="invest-card"><div class="val-icon" style="margin-bottom:14px;"><i class="fa-solid fa-earth-africa"></i></div><h4>Designed for Diaspora</h4><p>Remote processes, flexible payments, and consistent progress updates.</p></div>
+          <div class="invest-card"><div class="val-icon" style="margin-bottom:14px;"><i class="fa-solid fa-chart-line"></i></div><h4>Investment-Focused</h4><p>Capital appreciation, rental income, and long-term asset security.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Investment Types -->
+  <section class="section section-gray">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Opportunities</div>
+        <h2 class="h2" style="margin-bottom:12px;">Investment Opportunities</h2>
+        <p class="lead">Choose from a range of property types designed for different investment goals and budgets.</p>
+      </div>
+      <div class="invest-types">
+        <div class="invest-type-card r d1">
+          <div class="invest-type-icon"><i class="fa-solid fa-house"></i></div>
+          <h4>Residential Homes</h4>
+          <p>Modern, high-quality homes built for comfort, security, and long-term value in prime Malawian locations.</p>
+        </div>
+        <div class="invest-type-card r d2">
+          <div class="invest-type-icon"><i class="fa-solid fa-city"></i></div>
+          <h4>Gated Communities</h4>
+          <p>Secure, well-planned communities with premium infrastructure and amenities for your family.</p>
+        </div>
+        <div class="invest-type-card r d3">
+          <div class="invest-type-icon"><i class="fa-solid fa-building-columns"></i></div>
+          <h4>Commercial &amp; Mixed-Use</h4>
+          <p>Retail spaces, office buildings, and multi-use developments designed for business growth and returns.</p>
+        </div>
+        <div class="invest-type-card r d4">
+          <div class="invest-type-icon"><i class="fa-solid fa-coins"></i></div>
+          <h4>Rental Income Units</h4>
+          <p>Apartments and units specifically designed to generate consistent monthly income for investors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- How it Works -->
+  <section class="section">
+    <div class="w">
+      <div class="section-header r">
+        <div class="eyebrow">Process</div>
+        <h2 class="h2" style="margin-bottom:8px;">Simple. Secure. Reliable.</h2>
+        <p class="lead">How the investment process works from first contact to property handover.</p>
+      </div>
+      <div class="timeline r">
+        <div class="tl-item"><div class="tl-num">1</div><div class="tl-content"><h4>Choose Your Investment</h4><p>Select from our available properties or customized development packages. Our advisors help you match the right option to your goals and budget.</p></div></div>
+        <div class="tl-item"><div class="tl-num">2</div><div class="tl-content"><h4>Secure Agreement</h4><p>Sign contracts with full legal protection and verified documentation. All titles are confirmed before any payment is processed.</p></div></div>
+        <div class="tl-item"><div class="tl-num">3</div><div class="tl-content"><h4>Track Your Project</h4><p>Monitor progress remotely with regular updates, reports, photos, and videos delivered to you directly.</p></div></div>
+        <div class="tl-item"><div class="tl-num">4</div><div class="tl-content"><h4>Receive Your Property</h4><p>Get your completed property ready for use, rental, or resale &mdash; delivered on time and to specification.</p></div></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Remote Features -->
+  <section class="section section-dark">
+    <div class="diaspora-orb"></div>
+    <div class="w" style="position:relative;">
+      <div class="section-header center r">
+        <div class="eyebrow center gold-light">Remote Investment</div>
+        <h2 class="h2 white" style="margin-bottom:12px;">Built for Investors Abroad</h2>
+        <p class="lead white" style="margin:0 auto;">Distance should never be a barrier to opportunity. Our systems give you full control &mdash; no matter where you are.</p>
+      </div>
+      <div class="remote-grid r">
+        <div class="remote-card"><i class="fa-solid fa-satellite-dish"></i><h4>Real-Time Project Updates</h4><p>Regular photos, videos, and progress reports delivered to your inbox or phone.</p></div>
+        <div class="remote-card"><i class="fa-solid fa-file-signature"></i><h4>Digital Documentation</h4><p>Contracts and legal documents handled electronically with full transparency.</p></div>
+        <div class="remote-card"><i class="fa-solid fa-headset"></i><h4>Dedicated Support Team</h4><p>A dedicated project manager and advisor available throughout your investment journey.</p></div>
+        <div class="remote-card"><i class="fa-solid fa-lock"></i><h4>Secure Communication</h4><p>All communications and transactions processed through secure, verified channels.</p></div>
+        <div class="remote-card"><i class="fa-solid fa-credit-card"></i><h4>Flexible Payment Plans</h4><p>Installment options designed to suit diaspora timelines and international transfers.</p></div>
+        <div class="remote-card"><i class="fa-solid fa-house-circle-check"></i><h4>Property Management</h4><p>Optional post-handover management to generate rental income on your behalf.</p></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Trust -->
+  <section class="section section-gray">
+    <div class="w" style="text-align:center;">
+      <div class="eyebrow center" style="justify-content:center;margin-bottom:12px;">Compliance</div>
+      <h2 class="h2" style="margin-bottom:14px;">Invest with Confidence</h2>
+      <p class="lead" style="margin:0 auto 40px;">McKnight Group Limited is a fully registered and legally compliant company in Malawi, operating under national regulations and industry standards.</p>
+      <div class="advantage-list" style="max-width:700px;margin:0 auto;">
+        <div class="adv-item" style="background:var(--white);border:1px solid var(--border);color:var(--text);"><i class="fa-solid fa-circle-check" style="color:var(--gold);"></i> Verified land ownership</div>
+        <div class="adv-item" style="background:var(--white);border:1px solid var(--border);color:var(--text);"><i class="fa-solid fa-circle-check" style="color:var(--gold);"></i> Transparent contracts</div>
+        <div class="adv-item" style="background:var(--white);border:1px solid var(--border);color:var(--text);"><i class="fa-solid fa-circle-check" style="color:var(--gold);"></i> Ethical business practices</div>
+        <div class="adv-item" style="background:var(--white);border:1px solid var(--border);color:var(--text);"><i class="fa-solid fa-circle-check" style="color:var(--gold);"></i> Compliance with all legal requirements</div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Final CTA -->
+  <section class="section cta-banner" style="background:var(--dark);">
+    <div class="cta-banner-orb"></div>
+    <div class="w" style="position:relative;text-align:center;">
+      <div class="eyebrow center gold-light" style="justify-content:center;margin-bottom:12px;">Start Today</div>
+      <h2 class="h2 white" style="margin-bottom:14px;">Start Building Your Future Today</h2>
+      <p class="lead white" style="margin:0 auto 36px;">Whether you're investing for your family, your future, or financial growth &mdash; McKnight Group Limited is your trusted partner.</p>
+      <p style="font-size:13px;color:rgba(201,168,76,.6);font-style:italic;margin-bottom:32px;">Invest with confidence. Build with purpose. Come home to quality.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <button class="btn btn-gold btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-arrow-right"></i> Start Your Investment Journey</button>
+        <button class="btn btn-ghost-white btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-headset"></i> Speak to an Advisor</button>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-realestate -->
+ 
+ 
+<!-- ????????????????????????????????????????????????????
+     PAGE: PARTNERS
+???????????????????????????????????????????????????? -->
+<div class="page" id="page-partners">
+  <section class="page-hero">
+    <div class="page-hero-orb"></div>
+    <div class="w">
+      <div class="eyebrow gold-light">Partners &amp; Projects</div>
+      <h1 class="h1 white" style="margin-bottom:16px;margin-top:10px;">Trusted Partnerships.<br>Proven Results.</h1>
+      <p class="lead white">Delivering impactful solutions in collaboration with leading institutions, businesses, and organizations across Malawi.</p>
+    </div>
+  </section>
+ 
+  <!-- Intro -->
+  <section class="section">
+    <div class="w">
+      <div class="about-snap-inner" style="gap:72px;align-items:start;">
+        <div class="r">
+          <div class="eyebrow">Partnerships</div>
+          <h2 class="h2" style="margin-bottom:18px;">Building Strong Partnerships<br>That Deliver Results</h2>
+          <p style="font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:16px;">At McKnight Group Limited, our success is built on strong, long-term partnerships with both public and private sector clients. We take pride in delivering reliable, high-quality, and results-driven solutions that meet the evolving needs of our partners.</p>
+          <p style="font-size:15px;color:var(--muted);line-height:1.75;">Our growing portfolio reflects our ability to execute projects with professionalism, transparency, and consistency &mdash; earning the trust of respected institutions across Malawi.</p>
+        </div>
+        <div class="r d2">
+          <div class="why-card" style="background:var(--dark);border-color:var(--dark);margin-bottom:0;">
+            <div style="color:var(--gold);font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;">7+</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:24px;">trusted partner organizations</div>
+            <div class="dcard-list">
+              <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Government institutions</div>
+              <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Healthcare facilities</div>
+              <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Mining sector</div>
+              <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Real estate companies</div>
+              <div class="dcard-item"><i class="fa-solid fa-circle-check"></i> Private enterprises</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Partners Grid -->
+  <section class="section section-gray">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Our Partners</div>
+        <h2 class="h2" style="margin-bottom:12px;">Our Valued Clients &amp; Partners</h2>
+        <p class="lead">Organizations we are proud to work with across Malawi.</p>
+      </div>
+      <div class="partner-grid r">
+        <div class="partner-card"><div class="partner-logo"><i class="fa-solid fa-landmark"></i></div><div class="partner-info"><h4>Chikwawa District Council</h4><p>Supporting local government service delivery through reliable and timely solutions.</p></div></div>
+        <div class="partner-card"><div class="partner-logo"><i class="fa-solid fa-landmark"></i></div><div class="partner-info"><h4>Lilongwe District Council</h4><p>Contributing to infrastructure and operational support that empowers Malawi's capital district.</p></div></div>
+        <div class="partner-card"><div class="partner-logo"><i class="fa-solid fa-hospital"></i></div><div class="partner-info"><h4>Zomba Central Hospital</h4><p>Enhancing sanitation and operational standards in a key national healthcare institution.</p></div></div>
+        <div class="partner-card"><div class="partner-logo"><i class="fa-solid fa-mountain"></i></div><div class="partner-info"><h4>Sovereign Metals Limited</h4><p>Providing quality-driven services aligned with industrial and environmental standards in the mining sector.</p></div></div>
+        <div class="partner-card"><div class="partner-logo"><i class="fa-solid fa-building"></i></div><div class="partner-info"><h4>ERIS Property</h4><p>Partnering in the development and maintenance of premium real estate assets.</p></div></div>
+        <div class="partner-card"><div class="partner-logo"><i class="fa-solid fa-building"></i></div><div class="partner-info"><h4>RiverBend Properties</h4><p>Delivering efficient property management and maintenance solutions focused on long-term value.</p></div></div>
+        <div class="partner-card"><div class="partner-logo"><i class="fa-solid fa-briefcase"></i></div><div class="partner-info"><h4>Magrenda Limited</h4><p>Supporting business operations with dependable and tailored service solutions.</p></div></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Project Categories -->
+  <section class="section">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Projects</div>
+        <h2 class="h2" style="margin-bottom:12px;">Selected Projects &amp; Deliveries</h2>
+        <p class="lead">Our work spans multiple sectors, delivering solutions that make a measurable impact.</p>
+      </div>
+      <div class="proj-cats">
+        <div class="proj-cat r d1"><div class="proj-cat-top"><div class="proj-cat-icon"><i class="fa-solid fa-helmet-safety"></i></div><div><h4>Infrastructure &amp; Construction</h4><span>Building &amp; civil works projects</span></div></div><div class="proj-cat-body">Execution of building, road, and civil works projects with strict quality and engineering standards across Malawi.</div></div>
+        <div class="proj-cat r d2"><div class="proj-cat-top"><div class="proj-cat-icon"><i class="fa-solid fa-building"></i></div><div><h4>Real Estate Development</h4><span>Residential &amp; commercial properties</span></div></div><div class="proj-cat-body">Development and management of residential and commercial properties designed for sustainability and long-term value.</div></div>
+        <div class="proj-cat r d3"><div class="proj-cat-top"><div class="proj-cat-icon"><i class="fa-solid fa-broom"></i></div><div><h4>Cleaning &amp; Sanitation</h4><span>Institutional cleaning projects</span></div></div><div class="proj-cat-body">Provision of professional cleaning services in hospitals, offices, and institutional environments.</div></div>
+        <div class="proj-cat r d1"><div class="proj-cat-top"><div class="proj-cat-icon"><i class="fa-solid fa-shield-halved"></i></div><div><h4>Security &amp; Surveillance</h4><span>Security deployment projects</span></div></div><div class="proj-cat-body">Deployment of trained personnel and modern systems to secure facilities and assets across multiple sectors.</div></div>
+        <div class="proj-cat r d2"><div class="proj-cat-top"><div class="proj-cat-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div><h4>Procurement &amp; Supply</h4><span>Government &amp; private sector supply</span></div></div><div class="proj-cat-body">Efficient sourcing and delivery of essential goods to government and private sector clients across Malawi.</div></div>
+        <div class="proj-cat r d3"><div class="proj-cat-top"><div class="proj-cat-icon"><i class="fa-solid fa-mountain"></i></div><div><h4>Mining &amp; Resources</h4><span>Mining sector support services</span></div></div><div class="proj-cat-body">Specialized services to the mining sector including site preparation, logistics, and environmental rehabilitation.</div></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Approach -->
+  <section class="section section-gray">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Our Approach</div>
+        <h2 class="h2" style="margin-bottom:12px;">How We Work With Our Partners</h2>
+      </div>
+      <div class="approach-steps r">
+        <div class="approach-step"><div class="approach-step-num">01</div><h5>Understanding Needs</h5><p>We take time to understand each client's unique goals, challenges, and operational requirements.</p></div>
+        <div class="approach-step"><div class="approach-step-num">02</div><h5>Tailored Solutions</h5><p>We design customized solutions that align with client objectives and industry standards.</p></div>
+        <div class="approach-step"><div class="approach-step-num">03</div><h5>Professional Execution</h5><p>Our experienced team delivers projects with precision, efficiency, and accountability.</p></div>
+        <div class="approach-step"><div class="approach-step-num">04</div><h5>Continuous Support</h5><p>We maintain strong relationships through ongoing support and service improvement.</p></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Trust Points -->
+  <section class="section section-dark">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center gold-light">Trust</div>
+        <h2 class="h2 white" style="margin-bottom:12px;">A Partner You Can Rely On</h2>
+      </div>
+      <div class="trust-points r" style="max-width:800px;margin:0 auto;">
+        <div class="trust-point"><i class="fa-solid fa-circle-check"></i> Proven track record across multiple sectors</div>
+        <div class="trust-point"><i class="fa-solid fa-circle-check"></i> Trusted by government and private enterprises</div>
+        <div class="trust-point"><i class="fa-solid fa-circle-check"></i> Consistent delivery of high-quality results</div>
+        <div class="trust-point"><i class="fa-solid fa-circle-check"></i> Strong commitment to transparency and accountability</div>
+        <div class="trust-point"><i class="fa-solid fa-circle-check"></i> Professional and experienced team</div>
+        <div class="trust-point"><i class="fa-solid fa-circle-check"></i> Fully compliant with national regulations</div>
+      </div>
+      <p style="text-align:center;font-size:15px;color:rgba(255,255,255,.5);margin-top:48px;line-height:1.75;max-width:600px;margin-left:auto;margin-right:auto;">Every partnership we build contributes to something bigger &mdash; economic growth, improved infrastructure, healthier environments, and stronger communities.</p>
+    </div>
+  </section>
+ 
+  <!-- Partners CTA -->
+  <section class="section">
+    <div class="w" style="text-align:center;">
+      <div class="eyebrow center" style="justify-content:center;margin-bottom:12px;">Partner With Us</div>
+      <h2 class="h2" style="margin-bottom:14px;">Let's Build a Successful Partnership</h2>
+      <p class="lead" style="margin:0 auto 36px;">Whether you're a government institution, private company, or organization seeking reliable solutions, McKnight Group Limited is ready to deliver.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <button class="btn btn-primary btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-handshake"></i> Partner With Us</button>
+        <button class="btn btn-ghost btn-lg" onclick="goTo('contact')"><i class="fa-solid fa-phone"></i> Contact Our Team</button>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-partners -->
+ 
+ 
+<!-- ????????????????????????????????????????????????????
+     PAGE: CONTACT
+???????????????????????????????????????????????????? -->
+<div class="page" id="page-contact">
+  <section class="page-hero">
+    <div class="page-hero-orb"></div>
+    <div class="w">
+      <div class="eyebrow gold-light">Contact</div>
+      <h1 class="h1 white" style="margin-bottom:16px;margin-top:10px;">We Are Ready to Work With You</h1>
+      <p class="lead white">Get in touch with our team for inquiries, consultations, or partnership opportunities.</p>
+    </div>
+  </section>
+ 
+  <!-- Main contact layout -->
+  <section class="section">
+    <div class="w">
+      <div class="contact-layout">
+        <!-- Left: info -->
+        <div class="contact-info">
+          <div class="r">
+            <div class="eyebrow">Contact</div>
+            <h2 class="h2" style="margin-bottom:14px;">Let's Start the Conversation</h2>
+            <p style="font-size:15px;color:var(--muted);line-height:1.72;">Whether you're looking for reliable services, exploring investment opportunities, or seeking a trusted partner for your next project, McKnight Group Limited is here to help.</p>
+          </div>
+ 
+          <div class="contact-office r d1">
+            <h4><i class="fa-solid fa-location-dot"></i> Blantyre Office</h4>
+            <div class="contact-detail"><i class="fa-solid fa-building"></i><span>Vanmali Building, 3rd Floor<br>Along Dunduzu Road, Kanjedza, Limbe</span></div>
+            <div class="contact-detail"><i class="fa-solid fa-phone"></i><span><a href="tel:0897972021" style="color:var(--dark);font-weight:600;">0897972021</a> / <a href="tel:0981551234" style="color:var(--dark);font-weight:600;">0981551234</a></span></div>
+          </div>
+ 
+          <div class="contact-office r d2">
+            <h4><i class="fa-solid fa-location-dot"></i> Lilongwe Headquarters</h4>
+            <div class="contact-detail"><i class="fa-solid fa-building"></i><span>Step Ahead Complex, Area 7<br>Opposite Kawale Engen Filling Station<br>P.O. Box 3412</span></div>
+            <div class="contact-detail"><i class="fa-solid fa-phone"></i><span><a href="tel:0888786815" style="color:var(--dark);font-weight:600;">0888786815</a> / <a href="tel:0897972020" style="color:var(--dark);font-weight:600;">0897972020</a><br><a href="tel:0988898777" style="color:var(--dark);font-weight:600;">0988898777</a></span></div>
+          </div>
+ 
+          <div class="contact-office r d3">
+            <h4><i class="fa-solid fa-envelope"></i> Email</h4>
+            <div class="contact-detail"><i class="fa-solid fa-at"></i><span><a href="mailto:mcknightgroupmw@gmail.com" style="color:var(--gold);font-weight:600;">mcknightgroupmw@gmail.com</a></span></div>
+          </div>
+ 
+          <div class="r d4">
+            <h3 class="h3" style="margin-bottom:14px;font-size:15px;">Need a Faster Response?</h3>
+            <div class="quick-actions">
+              <a href="https://wa.me/265888786815" class="quick-action"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> Chat with us on WhatsApp</a>
+              <a href="tel:0888786815" class="quick-action"><i class="fa-solid fa-phone"></i> Call us directly</a>
+              <a href="mailto:mcknightgroupmw@gmail.com" class="quick-action"><i class="fa-solid fa-envelope"></i> Send us an email</a>
+            </div>
+            <p style="font-size:12px;color:var(--muted);margin-top:12px;"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:6px;"></i> We typically respond within a few hours.</p>
+          </div>
+        </div>
+ 
+        <!-- Right: form -->
+        <div class="contact-form r d2">
+          <div class="eyebrow" style="margin-bottom:10px;">Message Us</div>
+          <h3 class="h3" style="margin-bottom:24px;">Send Us a Message</h3>
+          <div class="form-row">
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="John Banda"/></div>
+            <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+265 888 000 000"/></div>
+          </div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com"/></div>
+          <div class="form-group">
+            <label>Service of Interest</label>
+            <select>
+              <option value="">Select a service...</option>
+              <option>Real Estate / Investment</option>
+              <option>Construction</option>
+              <option>Security</option>
+              <option>Cleaning</option>
+              <option>Pest Control</option>
+              <option>General Supplies</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Your Message</label><textarea placeholder="Tell us about your project or inquiry..."></textarea></div>
+          <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" onclick="submitForm()">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </button>
+          <div class="form-success" id="formSuccess">
+            <i class="fa-solid fa-circle-check"></i> Thank you! We'll get back to you shortly.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Business Details -->
+  <section class="section biz-details">
+    <div class="w">
+      <div class="section-header center r">
+        <div class="eyebrow center">Company Info</div>
+        <h2 class="h2" style="margin-bottom:6px;">Company Information</h2>
+      </div>
+      <div class="biz-inner r">
+        <div class="biz-item"><label>Company Name</label><strong>McKnight Group Limited</strong></div>
+        <div class="biz-item"><label>Registration Number</label><strong>COY-4KU5DM7</strong></div>
+        <div class="biz-item"><label>Registered In</label><strong>Malawi</strong></div>
+        <div class="biz-item"><label>Compliance</label><strong>MRA &amp; PPDA Registered</strong></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Final CTA -->
+  <section class="section cta-banner" style="background:var(--dark);">
+    <div class="cta-banner-orb"></div>
+    <div class="w" style="position:relative;text-align:center;">
+      <h2 class="h2 white" style="margin-bottom:14px;">Let's Build Something Great Together</h2>
+      <p class="lead white" style="margin:0 auto 36px;">Partner with McKnight Group Limited for reliable, professional, and high-quality solutions across every sector.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <button class="btn btn-gold btn-lg" onclick="document.querySelector('.contact-form').scrollIntoView({behavior:'smooth'})"><i class="fa-solid fa-calendar-check"></i> Request a Consultation</button>
+        <button class="btn btn-ghost-white btn-lg" onclick="goTo('services')"><i class="fa-solid fa-grid-2"></i> Explore Our Services</button>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-contact -->
+ 
+ 
+<!-- ??? FOOTER ??????????????????????????????????????????? -->
+<footer>
+  <div style="max-width:1180px;margin:0 auto;">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" onclick="goTo('home')" style="margin-bottom:0;cursor:pointer;">
+          <div class="nav-logo-mark"><i class="fa-solid fa-building-columns"></i></div>
+          <div class="nav-logo-words"><strong style="color:var(--white);">McKnight Group</strong><span>Limited</span></div>
+        </div>
+        <p>Integrated solutions across construction, engineering, real estate, and supply services &mdash; built with trust and excellence.</p>
+        <div class="footer-socials">
+          <div class="f-social"><i class="fa-brands fa-facebook-f"></i></div>
+          <div class="f-social"><i class="fa-brands fa-x-twitter"></i></div>
+          <div class="f-social"><i class="fa-brands fa-linkedin-in"></i></div>
+          <div class="f-social"><i class="fa-brands fa-whatsapp"></i></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h6>Services</h6>
+        <ul>
+          <li><a onclick="goTo('services')">General Supplies</a></li>
+          <li><a onclick="goTo('realestate')">Real Estate</a></li>
+          <li><a onclick="goTo('services')">Construction</a></li>
+          <li><a onclick="goTo('services')">Security</a></li>
+          <li><a onclick="goTo('services')">Cleaning</a></li>
+          <li><a onclick="goTo('services')">Pest Control</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Company</h6>
+        <ul>
+          <li><a onclick="goTo('about')">About Us</a></li>
+          <li><a onclick="goTo('partners')">Projects</a></li>
+          <li><a onclick="goTo('partners')">Partners</a></li>
+          <li><a onclick="goTo('contact')">Careers</a></li>
+          <li><a>Cloudwork Vault</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Contact</h6>
+        <div class="footer-contact-line"><i class="fa-solid fa-location-dot"></i><span>Vanmali Building, 3rd Floor, Limbe &amp; Step Ahead Complex, Area 7, Lilongwe</span></div>
+        <div class="footer-contact-line"><i class="fa-solid fa-phone"></i><span>0888786815 / 0897972021<br>0981551234 / 0988898777</span></div>
+        <div class="footer-contact-line"><i class="fa-solid fa-envelope"></i><span>mcknightgroupmw@gmail.com</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        <div>&copy; 2025 McKnight Group Limited. All rights reserved.</div>
+        <div class="footer-tagline">Where Integrity Meets Excellence &mdash; And Every Project Is a Promise Kept.</div>
+      </div>
+      <div style="display:flex;gap:16px;"><a>Privacy Policy</a> <a>Terms of Use</a></div>
+    </div>
+  </div>
+</footer>
+ 
+<!-- WhatsApp FAB -->
+<a class="wa-fab" href="https://wa.me/265888786815" target="_blank" title="Chat on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+ 
+<script>
+/* ??? ROUTING ??????????????????????????????? */
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  const nl = document.getElementById('nl-' + page);
+  if (el) el.classList.add('active');
+  if (nl) nl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  triggerReveal();
+}
+ 
+/* ??? MOBILE MENU ??????????????????????????? */
+function toggleMenu() {
+  const m = document.getElementById('mobileMenu');
+  const icon = document.getElementById('ham-icon');
+  m.classList.toggle('open');
+  icon.className = m.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('ham-icon').className = 'fa-solid fa-bars';
+}
+ 
+/* ??? SCROLL NAV ???????????????????????????? */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+ 
+/* ??? REVEAL ???????????????????????????????? */
+function triggerReveal() {
+  setTimeout(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.page.active .r:not(.vis)').forEach(el => obs.observe(el));
+  }, 50);
+}
+document.addEventListener('DOMContentLoaded', triggerReveal);
+ 
+/* ??? FORM ?????????????????????????????????? */
+function submitForm() {
+  const s = document.getElementById('formSuccess');
+  s.style.display = 'flex';
+  setTimeout(() => { s.style.display = 'none'; }, 5000);
+}
+</script>
+</body>
+</html>
+ 
